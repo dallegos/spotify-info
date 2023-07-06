@@ -4,7 +4,6 @@
     "description": "",
     "main": "app.ts",
     "scripts": {
-        "prebuild": "eslint \"./**/*.ts\"",
         "build": "npx tsc",
         "start": "node dist/app.js",
         "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/app.js\""
