@@ -2,6 +2,8 @@ import express, { Express, Request, Response } from "express";
 import { getNowPlaying, getTopTracks } from "./lib/spotify";
 import { downloadImage, getTemplate } from "./lib/utils";
 
+const etag = require("etag");
+
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require("dotenv").config();
 
@@ -31,8 +33,16 @@ app.get("/now-playing", async (req: Request, res: Response) => {
         artistLink: nowPlaying.data.item.artists[0].external_urls.spotify,
     });
 
-    res.set("Content-type", "image/svg+xml; charset=utf-8");
-    res.set("Cache-Control", "no-cache, no-store");
+    res.set({
+        "Content-type": "image/svg+xml; charset=utf-8",
+        "Cache-Control":
+            "no-cache, no-store, must-revalidate, proxy.revalidate",
+        Pragma: "no-cache",
+        Expires: "0",
+        "Surrogate-Control": "no-store",
+        ETag: etag(template),
+    });
+
     res.send(Buffer.from(template));
 });
 
