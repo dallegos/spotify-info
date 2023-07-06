@@ -1,3 +1,4 @@
+import fetch from "node-fetch";
 import { CurrentlyPlayingResponse, TopTracksResponse } from "../models/spotify";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -27,7 +28,6 @@ async function getAccessToken() {
     });
 
     const responseJson = await response.json();
-
     console.log(responseJson);
 
     return responseJson;
@@ -39,7 +39,7 @@ interface Response<T> {
 }
 
 async function getData<T>(URL: string): Promise<Response<T>> {
-    const { access_token } = await getAccessToken();
+    const { access_token } = (await getAccessToken()) as any;
 
     const response = await fetch(URL, {
         headers: {
