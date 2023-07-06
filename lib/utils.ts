@@ -1,3 +1,4 @@
+import fetch from "node-fetch";
 import { readFileSync } from "fs";
 
 export function getTemplate(filename: string, info: any) {
