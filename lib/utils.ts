@@ -5,7 +5,11 @@ export function getTemplate(filename: string, info: any) {
     let template = readFileSync(`./views/${filename}`, "utf8");
 
     Object.entries(info).forEach((entry) => {
-        template = template.replaceAll(`{{ ${entry[0]} }}`, entry[1] as string);
+        //template = template.replaceAll(`{{ ${entry[0]} }}`, entry[1] as string);
+
+        const re = new RegExp(`{{ ${entry[0]} }}`, "g");
+
+        template = template.replace(re, entry[1] as string);
     });
 
     return template;
