@@ -32,6 +32,7 @@ app.get("/now-playing", async (req: Request, res: Response) => {
     });
 
     res.set("Content-type", "image/svg+xml; charset=utf-8");
+    res.set("Cache-Control", "no-cache, no-store");
     res.send(Buffer.from(template));
 });
 
