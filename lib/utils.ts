@@ -1,6 +1,5 @@
 import fetch from "node-fetch";
 import { readFileSync } from "fs";
-import { TemplateObject } from "../models";
 
 /**
  *
@@ -8,13 +7,18 @@ import { TemplateObject } from "../models";
  * @param data The data to apply to the template
  * @returns The template with the applied data
  */
-export function getTemplate(filename: string, data: TemplateObject): string {
+export function getTemplate<T>(filename: string, data?: T): string {
     let template = readFileSync(`./views/${filename}`, "utf8");
 
     // Process template with data
-    Object.entries(data).forEach(([key, value]): void => {
-        template = template.replace(new RegExp(`{{ ${key} }}`, "g"), value);
-    });
+    if (data) {
+        Object.entries(data).forEach(([key, value]): void => {
+            template = template.replace(
+                new RegExp(`{{ ${key} }}`, "g"),
+                value as string
+            );
+        });
+    }
 
     // Create bars
     const bars = Array.from({ length: 70 })

@@ -6,6 +6,7 @@ require("dotenv").config();
 
 import express, { Express, NextFunction, Response } from "express";
 import { getNowPlaying, getTopTracks, getTemplate, parseData } from "./lib";
+import { ErrorTemplateObject, TemplateObject } from "./models";
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
@@ -36,11 +37,18 @@ app.get("/top-tracks", async (_, res: Response) => {
 
 app.get("/now-playing", async (_, res: Response) => {
     const nowPlaying = await getNowPlaying();
+    let template = "";
 
-    const template = getTemplate(
-        "currently-playing.html",
-        await parseData(nowPlaying.data)
-    );
+    if (nowPlaying.error) {
+        template = getTemplate<ErrorTemplateObject>("not-playing.html", {
+            message: nowPlaying.message,
+        });
+    } else {
+        template = getTemplate<TemplateObject>(
+            "currently-playing.html",
+            await parseData(nowPlaying.data)
+        );
+    }
 
     // This is not on the middleware because I've decided to use the template as the ETag
     res.set("ETag", etag(template));
