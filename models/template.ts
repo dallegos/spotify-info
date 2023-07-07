@@ -5,3 +5,7 @@ export interface TemplateObject {
     songLink: string;
     artistLink: string;
 }
+
+export interface ErrorTemplateObject {
+    message: string;
+}
