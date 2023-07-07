@@ -1,21 +1,37 @@
 import fetch from "node-fetch";
 import { readFileSync } from "fs";
+import { TemplateObject } from "../models";
 
-export function getTemplate(filename: string, info: any) {
+/**
+ *
+ * @param filename The template string to process should be located in the ./views folder
+ * @param data The data to apply to the template
+ * @returns The template with the applied data
+ */
+export function getTemplate(filename: string, data: TemplateObject): string {
     let template = readFileSync(`./views/${filename}`, "utf8");
 
-    Object.entries(info).forEach((entry) => {
-        template = template.replace(
-            new RegExp(`{{ ${entry[0]} }}`, "g"),
-            entry[1] as string
-        );
+    // Process template with data
+    Object.entries(data).forEach(([key, value]): void => {
+        template = template.replace(new RegExp(`{{ ${key} }}`, "g"), value);
     });
+
+    // Create bars
+    const bars = Array.from({ length: 70 })
+        .map(() => "<div></div>")
+        .join("");
+    template = template.replace("{{ bars }}", bars);
 
     return template;
 }
 
-export async function downloadImage(path: string): Promise<string> {
-    const response = await fetch(path);
+/**
+ * Downloads an image and returns it as an encoded base64 string
+ * @param url The image URL to download
+ * @returns The image encoded
+ */
+export async function downloadImage(url: string): Promise<string> {
+    const response = await fetch(url);
     const buffer = await response.arrayBuffer();
     return Buffer.from(buffer).toString("base64");
 }
