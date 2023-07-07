@@ -1,7 +1,7 @@
 {
     "name": "spotify-info",
     "version": "1.0.0",
-    "description": "",
+    "description": "A set of script that allows me to display what I'm currently playing on Spotify",
     "main": "app.ts",
     "scripts": {
         "build": "npx tsc",
@@ -12,9 +12,17 @@
         "type": "git",
         "url": "git+https://github.com/dallegos/spotify-info.git"
     },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
+    "keywords": [
+        "javascript",
+        "spotify",
+        "typescript",
+        "experimental",
+        "spotify-api",
+        "expressjs",
+        "now-playing"
+    ],
+    "author": "David Gallegos (https://github.com/dallegos)",
+    "license": "GPL-3.0",
     "bugs": {
         "url": "https://github.com/dallegos/spotify-info/issues"
     },
