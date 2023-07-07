@@ -15,7 +15,7 @@ export function getTemplate<T>(filename: string, data?: T): string {
         Object.entries(data).forEach(([key, value]): void => {
             template = template.replace(
                 new RegExp(`{{ ${key} }}`, "g"),
-                value as string
+                escapeXML(value as string)
             );
         });
     }
