@@ -9,7 +9,7 @@ import {
     EpisodeItem,
     TrackItem,
 } from "../models";
-import { downloadImage, escapeXML } from "./utils";
+import { downloadImage } from "./utils";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require("dotenv").config();
@@ -119,13 +119,13 @@ async function parseEpisode(
     const episode = data.item as EpisodeItem;
 
     return {
-        songName: escapeXML(episode.name),
-        artistName: escapeXML(episode.show.name),
+        songName: episode.name,
+        artistName: episode.show.name,
         image: await downloadImage(
             episode.show.images[1].url || episode.show.images[0].url
         ),
-        songLink: escapeXML(episode.external_urls.spotify),
-        artistLink: escapeXML(episode.show.external_urls.spotify),
+        songLink: episode.external_urls.spotify,
+        artistLink: episode.show.external_urls.spotify,
     };
 }
 
@@ -140,14 +140,12 @@ async function parseTrack(
     const track = info.item as TrackItem;
 
     return {
-        songName: escapeXML(track.name),
-        artistName: escapeXML(
-            track.artists.map((artist) => artist.name).join(", ")
-        ),
+        songName: track.name,
+        artistName: track.artists.map((artist) => artist.name).join(", "),
         image: await downloadImage(
             track.album.images[1].url || track.album.images[0].url
         ),
-        songLink: escapeXML(track.external_urls.spotify),
-        artistLink: escapeXML(track.artists[0].external_urls.spotify),
+        songLink: track.external_urls.spotify,
+        artistLink: track.artists[0].external_urls.spotify,
     };
 }
