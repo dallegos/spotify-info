@@ -39,3 +39,27 @@ export async function downloadImage(url: string): Promise<string> {
     const buffer = await response.arrayBuffer();
     return Buffer.from(buffer).toString("base64");
 }
+
+/**
+ * Escapes the string to make it safe for XML
+ * @param string The string to scape
+ * @returns The string scaped
+ */
+export function escapeXML(string: string) {
+    return string.replace(/[<>&'"]/g, (c) => {
+        switch (c) {
+            case "<":
+                return "&lt;";
+            case ">":
+                return "&gt;";
+            case "&":
+                return "&amp;";
+            case "'":
+                return "&apos;";
+            case '"':
+                return "&quot;";
+            default:
+                return "";
+        }
+    });
+}
