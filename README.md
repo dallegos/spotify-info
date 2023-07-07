@@ -7,7 +7,7 @@ This script should return an image, preferably in SVG format, with information a
 This allows me to include it in README files or any place where I can't load iframes or code.
 
 You can see a demo at [this link](https://spotify-info.onrender.com/now-playing).
-Since it's hosted on [Reder](https://render.com/) using a free plan, you may need to refresh multiple times or wait for a while, 
+Since it's hosted on [Render](https://render.com/) using a free plan, you may need to refresh multiple times or wait for a while, 
 as this plan terminates the process if there hasn't been recent activity.
 
 ## How to use it
