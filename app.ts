@@ -1,47 +1,52 @@
-import express, { Express, Request, Response } from "express";
-import { getNowPlaying, getTopTracks } from "./lib/spotify";
-import { downloadImage, getTemplate } from "./lib/utils";
-
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const etag = require("etag");
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require("dotenv").config();
 
+import express, { Express, NextFunction, Response } from "express";
+import { getNowPlaying, getTopTracks, getTemplate, parseData } from "./lib";
+
 const app: Express = express();
 const port = process.env.PORT || 3000;
 
-app.get("/top-tracks", async (req: Request, res: Response) => {
+/**
+ * since we are going to return an image, we need to prevent any
+ * caching to avoid the image being the same all the time or until the cache is refreshed
+ */
+app.use(function (_, res: Response, next: NextFunction): void {
+    res.set({
+        "Cache-Control":
+            "no-cache, no-store, must-revalidate, proxy-revalidate",
+        "Surrogate-Control": "no-store",
+        Pragma: "no-cache",
+        Expires: "0",
+    });
+
+    next();
+});
+
+/**
+ * TODO: Process and create view for top tracks
+ */
+app.get("/top-tracks", async (_, res: Response) => {
     const topTracks = await getTopTracks();
     res.json(topTracks);
 });
 
-app.get("/now-playing", async (req: Request, res: Response) => {
+app.get("/now-playing", async (_, res: Response) => {
     const nowPlaying = await getNowPlaying();
 
-    console.log(nowPlaying.data.item.external_urls.spotify);
+    const template = getTemplate(
+        "currently-playing.html",
+        await parseData(nowPlaying.data)
+    );
 
-    const template = getTemplate("currently-playing.html", {
-        songName: nowPlaying.data.item.name,
-        artistName: nowPlaying.data.item.artists
-            .map((artist) => artist.name)
-            .join(", "),
-        image: await downloadImage(
-            nowPlaying.data.item.album.images[1].url ||
-                nowPlaying.data.item.album.images[0].url
-        ),
-        songLink: nowPlaying.data.item.external_urls.spotify,
-        artistLink: nowPlaying.data.item.artists[0].external_urls.spotify,
-    });
+    // This is not on the middleware because I've decided to use the template as the ETag
+    res.set("ETag", etag(template));
 
-    res.set({
-        "Content-type": "image/svg+xml; charset=utf-8",
-        "Cache-Control":
-            "no-cache, no-store, must-revalidate, proxy.revalidate",
-        Pragma: "no-cache",
-        Expires: "0",
-        "Surrogate-Control": "no-store",
-        ETag: etag(template),
-    });
+    // Force to return the parsed template as an SVG file
+    res.set("Content-type", "image/svg+xml; charset=utf-8");
 
     res.send(Buffer.from(template));
 });

@@ -7,1125 +7,149 @@
     <foreignObject width="480" height="133">
         <div xmlns="http://www.w3.org/1999/xhtml" class="container">
             <style>
-                .main {
-                    display: flex;
-                }
-
-                .container {
-                    border-radius: 5px;
-                    padding: 10px 10px 10px 0px;
-                    background-color: #0d1117;
-                    border: 1px solid #ffffff;
-                }
-
-                .art {
-                    width: 27%;
-                    float: left;
-                    margin-left: -5px;
-                }
-
-                .content {
-                    width: 71%;
-                }
-
-                .song {
-                    width: 330px;
-                    color: #9f9f9f;
-                    overflow: hidden;
-                    margin-top: 3px;
-                    font-size: 24px;
-                    white-space: nowrap;
-                    text-overflow: ellipsis;
-                }
-
-                .artist {
-                    width: 330px;
-                    color: white;
-                    font-size: 20px;
-                    margin-top: 4px;
-                    margin-bottom: 5px;
-                    overflow: hidden;
-                    white-space: nowrap;
-                    text-overflow: ellipsis;
-                }
-
-                .cover {
-                    width: 100px;
-                    height: 100px;
-                    border-radius: 5px;
-                }
-
-                #bars {
-                    bottom: 23px;
-                    position: absolute;
-                    margin: -20px 0 0 0px;
-                }
-
-                .bar {
-                    width: 3px;
-                    bottom: 1px;
-                    height: 15px;
-                    position: absolute;
-                    background: #eaeaea; /* fallback for old browsers */
-                    background-size: 200% 100%;
-                    background-position: 0% 50%;
-                    background-attachment: fixed;
-                    animation: gradient 15s ease infinite,
-                        pulse 0ms -800ms ease-in infinite alternate;
+                :root {
+                    --border-radius: 4px;
+                    --info-size: 330px;
+                    --color-background-box: linear-gradient(
+                        125deg,
+                        rgba(0, 0, 0, 1) 0%,
+                        rgba(51, 51, 51, 1) 100%
+                    );
+                    --color-song-name: #9f9f9f;
+                    --color-background-bars: #eaeaea;
+                    --bars-width: 3px;
+                    --bars-height: 16px;
+                    --bars-animation-time: 15s;
                 }
 
                 a {
                     text-decoration: none;
                 }
 
-                div {
+                .main {
+                    display: flex;
                     font-family: -apple-system, BlinkMacSystemFont, Segoe UI,
-                        Helvetica, Arial, sans-serif, Apple Color Emoji,
-                        Segoe UI Emoji;
+                        Helvetica, Arial, sans-serif;
                 }
 
-                @keyframes pulse {
-                    0% {
-                        height: 3px;
-                        opacity: 0.35;
+                .container {
+                    border-radius: var(--border-radius);
+                    background: var(--color-background-box);
+                    padding: 8px;
+                }
+
+                .art {
+                    margin-right: 12px;
+                }
+
+                .art img {
+                    object-fit: cover;
+                    width: 100px;
+                    height: 100px;
+                    border-radius: var(--border-radius);
+                }
+
+                .ellipsis {
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                }
+
+                .song {
+                    width: var(--info-size);
+                    color: var(--color-song-name);
+                    font-size: 24px;
+                }
+
+                .artist {
+                    width: var(--info-size);
+                    color: white;
+                    font-size: 20px;
+                    margin-top: 4px;
+                    margin-bottom: 5px;
+                }
+
+                @keyframes bounce {
+                    10% {
+                        transform: scaleY(0.3); /* start by scaling to 30% */
                     }
+
+                    30% {
+                        transform: scaleY(1); /* scale up to 100% */
+                    }
+
+                    60% {
+                        transform: scaleY(0.5); /* scale down to 50% */
+                    }
+
+                    80% {
+                        transform: scaleY(0.75); /* scale up to 75% */
+                    }
+
                     100% {
-                        height: 15px;
-                        opacity: 0.95;
+                        transform: scaleY(0.6); /* scale down to 60% */
                     }
                 }
 
-                .bar:nth-child(1) {
-                    left: 1px;
-                    animation-duration: 15s, 703ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.6834992511399971,
-                            1.2814847880804998,
-                            0.21490431277323896,
-                            0.08292916861926858
-                        );
-                }
-                .bar:nth-child(2) {
-                    left: 5px;
-                    animation-duration: 15s, 898ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.7771332424615525,
-                            0.5524934384942337,
-                            0.4879942490206737,
-                            1.138354991538885
-                        );
-                }
-                .bar:nth-child(3) {
-                    left: 9px;
-                    animation-duration: 15s, 749ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.9146436653594818,
-                            1.554823140997695,
-                            0.17196233445791043,
-                            1.8866602389600746
-                        );
-                }
-                .bar:nth-child(4) {
-                    left: 13px;
-                    animation-duration: 15s, 802ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.412600743271649,
-                            1.0944001844175044,
-                            0.9864982116923388,
-                            0.5647373993054337
-                        );
-                }
-                .bar:nth-child(5) {
-                    left: 17px;
-                    animation-duration: 15s, 700ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.4264170359371745,
-                            0.8930013993089101,
-                            0.4093922013497745,
-                            0.7566859822708485
-                        );
-                }
-                .bar:nth-child(6) {
-                    left: 21px;
-                    animation-duration: 15s, 568ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.5466723293783614,
-                            0.7089843103777875,
-                            0.7726881293529365,
-                            1.7468319562601875
-                        );
-                }
-                .bar:nth-child(7) {
-                    left: 25px;
-                    animation-duration: 15s, 839ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.09333298049992411,
-                            1.3298977038766349,
-                            0.8242483633600756,
-                            1.1436702795363296
-                        );
-                }
-                .bar:nth-child(8) {
-                    left: 29px;
-                    animation-duration: 15s, 635ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.5283991125427261,
-                            1.2532981003756378,
-                            0.04020455969138326,
-                            1.2885633999724597
-                        );
-                }
-                .bar:nth-child(9) {
-                    left: 33px;
-                    animation-duration: 15s, 831ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.9705451364023041,
-                            0.6019174110621672,
-                            0.06847599059175224,
-                            0.5698486672338126
-                        );
-                }
-                .bar:nth-child(10) {
-                    left: 37px;
-                    animation-duration: 15s, 530ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.7287072729613899,
-                            0.07338335033816024,
-                            0.22460257653489935,
-                            0.8699690881578155
-                        );
-                }
-                .bar:nth-child(11) {
-                    left: 41px;
-                    animation-duration: 15s, 626ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.5121650905385206,
-                            1.392038602999354,
-                            0.8851660020502368,
-                            1.2161328280643915
-                        );
-                }
-                .bar:nth-child(12) {
-                    left: 45px;
-                    animation-duration: 15s, 664ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.29306830561468,
-                            0.8812698427536823,
-                            0.8173289961645851,
-                            0.5403283311823242
-                        );
-                }
-                .bar:nth-child(13) {
-                    left: 49px;
-                    animation-duration: 15s, 845ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.5683763104175752,
-                            0.3331842313052955,
-                            0.4599828804535878,
-                            1.8097127375988193
-                        );
-                }
-                .bar:nth-child(14) {
-                    left: 53px;
-                    animation-duration: 15s, 544ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.1042963753203171,
-                            0.44720102514971627,
-                            0.058337135479095026,
-                            0.4695549788909821
-                        );
-                }
-                .bar:nth-child(15) {
-                    left: 57px;
-                    animation-duration: 15s, 605ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.19167392627385538,
-                            0.6955320857642893,
-                            0.9478144310869632,
-                            0.5782231619394613
-                        );
-                }
-                .bar:nth-child(16) {
-                    left: 61px;
-                    animation-duration: 15s, 800ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.9460817794294558,
-                            0.9654475962780364,
-                            0.7318013975409486,
-                            1.4809869978137102
-                        );
-                }
-                .bar:nth-child(17) {
-                    left: 65px;
-                    animation-duration: 15s, 686ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.6051086528811869,
-                            0.21089912877040073,
-                            0.13428502857720448,
-                            1.8722056005410623
-                        );
-                }
-                .bar:nth-child(18) {
-                    left: 69px;
-                    animation-duration: 15s, 813ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.4377028176509118,
-                            1.058373719809962,
-                            0.9592991569550456,
-                            0.3912806414898973
-                        );
-                }
-                .bar:nth-child(19) {
-                    left: 73px;
-                    animation-duration: 15s, 877ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.40552290663274393,
-                            0.4151357915873153,
-                            0.5661148683573078,
-                            1.8491395865342521
-                        );
-                }
-                .bar:nth-child(20) {
-                    left: 77px;
-                    animation-duration: 15s, 612ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.8983940277061891,
-                            1.348505216243356,
-                            0.9385885222509055,
-                            0.870284648785431
-                        );
-                }
-                .bar:nth-child(21) {
-                    left: 81px;
-                    animation-duration: 15s, 767ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.27031415143287874,
-                            1.2444481766534277,
-                            0.6703950293366792,
-                            1.0014780601742026
-                        );
-                }
-                .bar:nth-child(22) {
-                    left: 85px;
-                    animation-duration: 15s, 1000ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.28023989068505795,
-                            0.48629786084076065,
-                            0.3344292028066055,
-                            1.2277061036228987
-                        );
-                }
-                .bar:nth-child(23) {
-                    left: 89px;
-                    animation-duration: 15s, 802ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.8786142534944043,
-                            1.0462491187560643,
-                            0.32595630477686577,
-                            1.1034734615010595
-                        );
-                }
-                .bar:nth-child(24) {
-                    left: 93px;
-                    animation-duration: 15s, 580ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.7994392686126505,
-                            0.948920741765122,
-                            0.654588138925784,
-                            0.07834530774809978
-                        );
-                }
-                .bar:nth-child(25) {
-                    left: 97px;
-                    animation-duration: 15s, 685ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.05264861363305784,
-                            0.570097196441451,
-                            0.8264249374740386,
-                            1.6682828279406678
-                        );
-                }
-                .bar:nth-child(26) {
-                    left: 101px;
-                    animation-duration: 15s, 504ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.5468049690323648,
-                            0.4557642366559356,
-                            0.903296713183877,
-                            1.5412214378023883
-                        );
-                }
-                .bar:nth-child(27) {
-                    left: 105px;
-                    animation-duration: 15s, 748ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.22953365316535457,
-                            1.3478355855541937,
-                            0.6676069431274056,
-                            1.6082029398961641
-                        );
-                }
-                .bar:nth-child(28) {
-                    left: 109px;
-                    animation-duration: 15s, 626ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.08685262679362205,
-                            0.8191205672775006,
-                            0.13730953946184277,
-                            0.9635979744186958
-                        );
-                }
-                .bar:nth-child(29) {
-                    left: 113px;
-                    animation-duration: 15s, 730ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.8168257638355239,
-                            1.076558444868061,
-                            0.410672791985373,
-                            1.238569847653448
-                        );
-                }
-                .bar:nth-child(30) {
-                    left: 117px;
-                    animation-duration: 15s, 808ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.5990328547883828,
-                            0.0003497494481519148,
-                            0.45350523819531163,
-                            0.3183956333731528
-                        );
-                }
-                .bar:nth-child(31) {
-                    left: 121px;
-                    animation-duration: 15s, 853ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.6330777648199687,
-                            1.4282874493153113,
-                            0.9073013194407485,
-                            1.9644842975049592
-                        );
-                }
-                .bar:nth-child(32) {
-                    left: 125px;
-                    animation-duration: 15s, 511ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.3785964949787164,
-                            1.7277213877505224,
-                            0.18467170676055222,
-                            1.3216955066237612
-                        );
-                }
-                .bar:nth-child(33) {
-                    left: 129px;
-                    animation-duration: 15s, 763ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.19675981630169492,
-                            0.18274504394725555,
-                            0.6376507160766576,
-                            1.700950797598519
-                        );
-                }
-                .bar:nth-child(34) {
-                    left: 133px;
-                    animation-duration: 15s, 828ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.3219978890651993,
-                            0.615915057250743,
-                            0.6567427329707781,
-                            0.49567052297718894
-                        );
-                }
-                .bar:nth-child(35) {
-                    left: 137px;
-                    animation-duration: 15s, 962ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.5623710497703986,
-                            0.3682593000049743,
-                            0.7326637014552524,
-                            1.9421266655558014
-                        );
-                }
-                .bar:nth-child(36) {
-                    left: 141px;
-                    animation-duration: 15s, 808ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.8490703322116835,
-                            0.7843708961870524,
-                            0.47048162359496437,
-                            0.5661333624558065
-                        );
-                }
-                .bar:nth-child(37) {
-                    left: 145px;
-                    animation-duration: 15s, 766ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.4460845066826211,
-                            0.8212195032192222,
-                            0.9022365501450675,
-                            1.3109740942409072
-                        );
-                }
-                .bar:nth-child(38) {
-                    left: 149px;
-                    animation-duration: 15s, 526ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.43746159005184826,
-                            1.2445706808204313,
-                            0.47106356711112485,
-                            1.9129453610095821
-                        );
-                }
-                .bar:nth-child(39) {
-                    left: 153px;
-                    animation-duration: 15s, 748ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.9639649474640827,
-                            0.7629057770333767,
-                            0.5355690857343913,
-                            1.9611464984294262
-                        );
-                }
-                .bar:nth-child(40) {
-                    left: 157px;
-                    animation-duration: 15s, 521ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.3834227565711319,
-                            0.8164020606914522,
-                            0.84811191622749,
-                            0.4564828939571324
-                        );
-                }
-                .bar:nth-child(41) {
-                    left: 161px;
-                    animation-duration: 15s, 758ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.8163984352263548,
-                            1.6305109042917862,
-                            0.5845441189583164,
-                            0.39634740112211597
-                        );
-                }
-                .bar:nth-child(42) {
-                    left: 165px;
-                    animation-duration: 15s, 709ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.6787316972727767,
-                            1.1095260214314793,
-                            0.031404918214748445,
-                            1.4646189267486753
-                        );
-                }
-                .bar:nth-child(43) {
-                    left: 169px;
-                    animation-duration: 15s, 839ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.5032400979639149,
-                            1.1678804900119635,
-                            0.03892750616168261,
-                            0.8070793615540979
-                        );
-                }
-                .bar:nth-child(44) {
-                    left: 173px;
-                    animation-duration: 15s, 622ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.40851981850583974,
-                            0.7582583656914021,
-                            0.11791890438973318,
-                            0.14915692021060734
-                        );
-                }
-                .bar:nth-child(45) {
-                    left: 177px;
-                    animation-duration: 15s, 989ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.6878686024921096,
-                            1.8086338124826349,
-                            0.7480111824958375,
-                            1.2014495277406854
-                        );
-                }
-                .bar:nth-child(46) {
-                    left: 181px;
-                    animation-duration: 15s, 899ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.2915091500721977,
-                            0.32140668815459694,
-                            0.19124343165225888,
-                            0.7195740425216695
-                        );
-                }
-                .bar:nth-child(47) {
-                    left: 185px;
-                    animation-duration: 15s, 811ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.0473044820197438,
-                            0.9298278092926542,
-                            0.5188715840481514,
-                            1.06454302797051
-                        );
-                }
-                .bar:nth-child(48) {
-                    left: 189px;
-                    animation-duration: 15s, 545ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.28621278581725584,
-                            1.1979566877595043,
-                            0.03595722320248951,
-                            0.5430878935391807
-                        );
-                }
-                .bar:nth-child(49) {
-                    left: 193px;
-                    animation-duration: 15s, 858ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.6472472892145301,
-                            1.566313497958835,
-                            0.792666754722209,
-                            0.30978258226947153
-                        );
-                }
-                .bar:nth-child(50) {
-                    left: 197px;
-                    animation-duration: 15s, 624ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.9996780958040374,
-                            1.66995045025323,
-                            0.1569813077140012,
-                            0.4620193551328047
-                        );
-                }
-                .bar:nth-child(51) {
-                    left: 201px;
-                    animation-duration: 15s, 808ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.7628394498713549,
-                            1.8944455312462931,
-                            0.37460373456007356,
-                            1.6011013805782146
-                        );
-                }
-                .bar:nth-child(52) {
-                    left: 205px;
-                    animation-duration: 15s, 639ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.21510581731589962,
-                            1.4736255475854414,
-                            0.16429833112509373,
-                            1.5919998396022181
-                        );
-                }
-                .bar:nth-child(53) {
-                    left: 209px;
-                    animation-duration: 15s, 965ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.6565429128373892,
-                            0.38344768286805286,
-                            0.0860811665061586,
-                            1.7411021951724186
-                        );
-                }
-                .bar:nth-child(54) {
-                    left: 213px;
-                    animation-duration: 15s, 542ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.07970130276454024,
-                            1.0555781890053315,
-                            0.20890229438698615,
-                            1.5018767330137774
-                        );
-                }
-                .bar:nth-child(55) {
-                    left: 217px;
-                    animation-duration: 15s, 609ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.9166050148163178,
-                            1.9650324262901535,
-                            0.7760887043679463,
-                            1.6432075696533597
-                        );
-                }
-                .bar:nth-child(56) {
-                    left: 221px;
-                    animation-duration: 15s, 873ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.5480158118411799,
-                            0.4462134462876002,
-                            0.06975482911653297,
-                            1.6890850792132557
-                        );
-                }
-                .bar:nth-child(57) {
-                    left: 225px;
-                    animation-duration: 15s, 662ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.15405635606581802,
-                            0.7761610361333406,
-                            0.5387968164651327,
-                            1.8625906933862426
-                        );
-                }
-                .bar:nth-child(58) {
-                    left: 229px;
-                    animation-duration: 15s, 711ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.6904977252144989,
-                            1.1089297253320562,
-                            0.04006198138951744,
-                            0.8509157510645364
-                        );
-                }
-                .bar:nth-child(59) {
-                    left: 233px;
-                    animation-duration: 15s, 749ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.7071014431631447,
-                            0.3388221135011187,
-                            0.849859675783827,
-                            1.6479046696163242
-                        );
-                }
-                .bar:nth-child(60) {
-                    left: 237px;
-                    animation-duration: 15s, 544ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.9722591520002547,
-                            0.8730980955656416,
-                            0.7793684921593101,
-                            0.6629217303247406
-                        );
-                }
-                .bar:nth-child(61) {
-                    left: 241px;
-                    animation-duration: 15s, 566ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.28079348507907353,
-                            0.7946208932369958,
-                            0.6233741998489617,
-                            1.4119601167051512
-                        );
-                }
-                .bar:nth-child(62) {
-                    left: 245px;
-                    animation-duration: 15s, 946ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.02793228790864133,
-                            1.7446598652979437,
-                            0.0950907730780528,
-                            1.6597592673581063
-                        );
-                }
-                .bar:nth-child(63) {
-                    left: 249px;
-                    animation-duration: 15s, 859ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.8939914240224449,
-                            0.710674715112424,
-                            0.026127602248191995,
-                            1.0073312984556173
-                        );
-                }
-                .bar:nth-child(64) {
-                    left: 253px;
-                    animation-duration: 15s, 813ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.10408923752145893,
-                            0.21451621454966463,
-                            0.5185455803266489,
-                            0.9950395874541738
-                        );
-                }
-                .bar:nth-child(65) {
-                    left: 257px;
-                    animation-duration: 15s, 651ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.6938770919635745,
-                            1.1330368098379793,
-                            0.5844447238502861,
-                            1.000590840376439
-                        );
-                }
-                .bar:nth-child(66) {
-                    left: 261px;
-                    animation-duration: 15s, 564ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.9898714684245843,
-                            0.6607252509803563,
-                            0.9819348169757836,
-                            1.251983019326114
-                        );
-                }
-                .bar:nth-child(67) {
-                    left: 265px;
-                    animation-duration: 15s, 841ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.10586099804103533,
-                            0.9192308858445011,
-                            0.42589461184384336,
-                            1.5358642127369455
-                        );
-                }
-                .bar:nth-child(68) {
-                    left: 269px;
-                    animation-duration: 15s, 687ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.1851082236910172,
-                            0.9850364311197009,
-                            0.5541110722442918,
-                            0.6421619908923437
-                        );
-                }
-                .bar:nth-child(69) {
-                    left: 273px;
-                    animation-duration: 15s, 549ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.5535989498969223,
-                            0.18333040943519552,
-                            0.5564714716271797,
-                            1.651351131387324
-                        );
-                }
-                .bar:nth-child(70) {
-                    left: 277px;
-                    animation-duration: 15s, 856ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.6661073978479445,
-                            1.1192852320283582,
-                            0.6419320849841276,
-                            0.5267406159859829
-                        );
-                }
-                .bar:nth-child(71) {
-                    left: 281px;
-                    animation-duration: 15s, 553ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.8046801083244628,
-                            1.4816861494960385,
-                            0.11594128529792103,
-                            1.167092567101057
-                        );
-                }
-                .bar:nth-child(72) {
-                    left: 285px;
-                    animation-duration: 15s, 536ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.3398061965745658,
-                            1.3199818447169724,
-                            0.9700381573472954,
-                            1.2827426326584526
-                        );
-                }
-                .bar:nth-child(73) {
-                    left: 289px;
-                    animation-duration: 15s, 869ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.8100016902603279,
-                            1.4463053229889296,
-                            0.6263344634248982,
-                            0.24231473671028847
-                        );
-                }
-                .bar:nth-child(74) {
-                    left: 293px;
-                    animation-duration: 15s, 727ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.7834340526590983,
-                            0.30591899171969095,
-                            0.7879913646738297,
-                            1.733634819778349
-                        );
-                }
-                .bar:nth-child(75) {
-                    left: 297px;
-                    animation-duration: 15s, 621ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.9704111092990874,
-                            0.5678687519347703,
-                            0.13620990536786415,
-                            0.15642532359424033
-                        );
-                }
-                .bar:nth-child(76) {
-                    left: 301px;
-                    animation-duration: 15s, 764ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.8820960595272825,
-                            0.7841455170497373,
-                            0.17166476680892573,
-                            0.2508238136465806
-                        );
-                }
-                .bar:nth-child(77) {
-                    left: 305px;
-                    animation-duration: 15s, 537ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.27697235706525636,
-                            1.2079417848277605,
-                            0.26617509431497666,
-                            1.6434276208228478
-                        );
-                }
-                .bar:nth-child(78) {
-                    left: 309px;
-                    animation-duration: 15s, 859ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.30475099917570925,
-                            0.3438272394091588,
-                            0.6599697780559013,
-                            0.8253574605773741
-                        );
-                }
-                .bar:nth-child(79) {
-                    left: 313px;
-                    animation-duration: 15s, 828ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.22183027287923351,
-                            0.030722278234880607,
-                            0.9272106150984768,
-                            1.8815906488080336
-                        );
-                }
-                .bar:nth-child(80) {
-                    left: 317px;
-                    animation-duration: 15s, 679ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.5148405489805565,
-                            0.2819867048421063,
-                            0.1737525810474051,
-                            1.0391211745551936
-                        );
-                }
-                .bar:nth-child(81) {
-                    left: 321px;
-                    animation-duration: 15s, 777ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.5386953378143372,
-                            1.5375497985872835,
-                            0.1050810797137881,
-                            1.9417090355400197
-                        );
-                }
-                .bar:nth-child(82) {
-                    left: 325px;
-                    animation-duration: 15s, 937ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.0026988283940513336,
-                            0.34895542477776686,
-                            0.7895585947340988,
-                            1.3482528323073606
-                        );
-                }
-                .bar:nth-child(83) {
-                    left: 329px;
-                    animation-duration: 15s, 780ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.8279446242906637,
-                            1.0351604334876905,
-                            0.5009866232367304,
-                            1.3803859622278085
-                        );
-                }
-                .bar:nth-child(84) {
-                    left: 333px;
-                    animation-duration: 15s, 963ms;
-                    animation-timing-function: ease,
-                        cubic-bezier(
-                            0.21023640176506442,
-                            1.9905183107918933,
-                            0.2327873358479895,
-                            1.594115168975934
-                        );
+                #newBars {
+                    margin-top: 24px;
+                    display: flex;
+                    gap: 2px;
+                }
+
+                #newBars div {
+                    background-color: white;
+                    height: var(--bars-height);
+                    width: var(--bars-width);
+                    border-radius: var(--border-radius);
+                    transform-origin: bottom;
+                    animation: bounce 2.2s ease infinite alternate;
+                }
+
+                #newBars div:nth-child(5n + 1) {
+                    animation-delay: -1.2s;
+                }
+
+                #newBars div:nth-child(6n + 2) {
+                    animation-delay: -3s;
+                }
+
+                #newBars div:nth-child(9n + 3) {
+                    animation-delay: -2.5s;
+                }
+
+                #newBars div:nth-child(3n + 4) {
+                    animation-delay: -1.9s;
+                }
+
+                #newBars div:nth-child(7n + 5) {
+                    animation-delay: -4.2s;
+                }
+
+                #newBars div:nth-child(4n + 6) {
+                    animation-delay: -2.3s;
+                }
+
+                #newBars div:nth-child(7n + 7) {
+                    animation-delay: -7.8s;
                 }
             </style>
 
             <div class="main">
                 <a class="art" href="{{ songLink }}" target="_blank">
-                    <center>
-                        <img
-                            src="data:image/png;base64, {{ image }}"
-                            class="cover"
-                        />
-                    </center>
+                    <img src="data:image/png;base64, {{ image }}" />
                 </a>
 
                 <div class="content">
                     <a href="{{ songLink }}" target="_blank">
-                        <div class="song">{{ songName }}</div>
+                        <div class="song ellipsis">{{ songName }}</div>
                     </a>
 
                     <a href="{{ artistLink }}" target="_blank">
-                        <div class="artist">{{ artistName }}</div>
+                        <div class="artist ellipsis">{{ artistName }}</div>
                     </a>
 
-                    <div id="bars">
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                    </div>
+                    <div id="newBars">{{ bars }}</div>
                 </div>
             </div>
         </div>
